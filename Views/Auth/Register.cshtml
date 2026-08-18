@@ -1,0 +1,27 @@
+﻿@model UserModel
+
+@{
+    ViewData["Title"] = "Cadastro";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Crie sua conta</h1>
+    <form asp-controller="Auth" asp-action="Register" method="post">
+        <label for="name">
+            <p>Nome:</p>
+             <input type="text" asp-for="Name" name="name" value="" id="name" />
+        </label>
+
+        <label for="email">
+            <p>Email:</p>
+            <input type="email" asp-for="Email" name="email" value="" id="email" />
+        </label>
+
+        <label for="password">
+            <p>Senha:</p>
+            <input type="password" asp-for="Password" name="password" value="" id="password" />
+        </label>
+
+        <input type="submit" name="name" value="CADASTRE-SE" />
+    </form>
+</div>

@@ -1,0 +1,58 @@
+﻿@model Tuple<UserModel, List<TicketModel>>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+
+
+    @if (Model != null && !string.IsNullOrEmpty(Model.Item1.Name))
+    {
+        <h1 class="display-4">Bem vindo, @Model.Item1.Name! Você é um @Model.Item1.Role.</h1>
+        
+        <a href="@Url.Action("Logout", "Auth")" class="btn btn-primary">Deslogar</a>
+
+       
+    }
+    else
+    {
+        <div class="mt-5">
+            <p>
+                Entre em sua conta para acessar seus chamados ou gerenciar suas solicitações.
+            </p>
+            <a href="@Url.Action("Login", "Auth")" class="btn btn-primary">Entrar</a>
+        </div>
+
+        <div class="mt-5">
+            <p>
+                Não possui uma conta? Cadastre-se para começar a gerenciar seus chamados.
+            </p>
+            <a href="@Url.Action("Register", "Auth")" class="btn btn-primary">Cadastre-se</a>
+        </div>
+    }
+    <h2 class="display-6">
+        Aqui você pode gerenciar seus chamados de forma eficiente e organizada. Navegue pelo menu para criar, visualizar e atualizar seus tickets
+    </h2>
+
+    <div>
+            
+                @if (Model?.Item2.Count > 0)
+                {
+                    foreach(TicketModel ticket in Model.Item2)
+                    {
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <a href="@Url.Action("Index","Tickets", new { id = ticket.Id })" class="btn btn-primary">@ticket.Title</a>
+                                <p class="card-text">@ticket.Description</p>
+                                <p class="card-text"><small class="text-muted">Status: @ticket.Status</small></p>
+                            </div>
+                        </div>
+                    }
+                    
+                }
+        
+
+
+    </div>
+
+</div>

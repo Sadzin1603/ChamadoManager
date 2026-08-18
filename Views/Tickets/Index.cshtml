@@ -1,0 +1,26 @@
+﻿@using System.Security.Claims
+@model TicketModel
+@{
+    ViewData["Title"] = "Criar Ticket";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Ticket<span class="badge badge-primary">@Model.Title</span></h1>
+    <h2 class="display-6">@Model.Description</h2>
+
+    <div class="conversa">
+        <div class="mensagem">
+            @foreach (var comment in Model.Comment)
+            {
+                <div class="mensagem">
+                    <p>@comment.Content</p>
+                    <span class="autor">@comment.User.Name</span>
+                </div>
+            }
+            
+        </div>
+    </div>
+
+    <input type="text" name="name" value="" />
+
+</div>
