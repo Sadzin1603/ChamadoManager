@@ -20,11 +20,46 @@
                         @Model.Description
                     </p>
                 </div>
+                <form asp-controller="Tickets"
+                      asp-action="AlterarStatus"
+                      method="post">
 
-                <span class="badge bg-primary">
-                    @Model.Status
-                </span>
+                    <input type="hidden"
+                           name="ticketId"
+                           value="@Model.Id" />
 
+                    <div class="dropdown">
+
+                        <button class="btn btn-secondary dropdown-toggle"
+                                type="button"
+                                id="dropdownMenuButton2"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            @Model.Status
+                        </button>
+
+                        <div class="dropdown-menu"
+                             aria-labelledby="dropdownMenuButton2">
+
+                            <button type="submit"
+                                    class="dropdown-item"
+                                    name="status"
+                                    value="1">
+                                Em Andamento
+                            </button>
+
+                            <button type="submit"
+                                    class="dropdown-item"
+                                    name="status"
+                                    value="3">
+                                Fechado
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
             </div>
         </div>
 
@@ -55,7 +90,7 @@
                                 </div>
 
                                 <small class="text-muted">
-                                    @comment.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                                    @comment.CreatedAt.ToString("dd/MM HH:mm")
                                 </small>
 
                             </div>
@@ -81,7 +116,7 @@
                                 </div>
 
                                 <small class="text-muted">
-                                    @comment.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                                    @comment.CreatedAt.ToString("dd/MM HH:mm")
                                 </small>
 
                             </div>

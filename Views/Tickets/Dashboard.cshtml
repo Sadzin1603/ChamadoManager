@@ -17,50 +17,70 @@
         <tbody>
             @if(Model != null && Model.Item1.Count >0 )
             {
-                foreach(TicketModel ticket in Model.Item1)
+                @foreach (TicketModel ticket in Model.Item1)
                 {
                     <tr>
                         <td>@ticket.Title</td>
                         <td>@ticket.Description</td>
+
                         <td>
                             <div class="dropdown">
-                                
-                                    @if(ticket.AssignedEmployee != null)
-                                    {
-                                     
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                @{
+                                    var dropdownId = $"dropdownTicket{ticket.Id}";
+                                }
+
+                                @if (ticket.AssignedEmployee != null)
+                                {
+                                    <button class="btn btn-secondary dropdown-toggle"
+                                            type="button"
+                                            id="@dropdownId"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false">
                                         @ticket.AssignedEmployee.Name
                                     </button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-secondary dropdown-toggle"
+                                            type="button"
+                                            id="@dropdownId"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                        Selecionar funcionário
+                                    </button>
+                                }
 
-                                    }
-                                    else
+                                <div class="dropdown-menu"
+                                     aria-labelledby="@dropdownId">
+
+                                    @if (Model.Item2 != null && Model.Item2.Count > 0)
                                     {
-                                        <button class= "btn btn-secondary dropdown-toggle" type = "button" id = "dropdownMenuButton" data - bs - toggle = "dropdown" aria - haspopup = "true" aria - expanded = "false" >
-                                            Selecionar funcionário
-                                        </button >
-                                    }
-                                <form asp-controller="Tickets" asp-action="AlterarFuncionario" method="post">
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <!-- Aqui eu preciso dos funcionarios no banco de dados-->
-                                        @if (Model != null && Model.Item2.Count > 0)
+                                        foreach (UserModel user in Model.Item2)
                                         {
-                                            foreach (UserModel user in Model.Item2)
-                                            {
-                                                <form asp-controller="Tickets"
-                                                      asp-action="AlterarFuncionario"
-                                                      method="post">
+                                            <form asp-controller="Tickets"
+                                                  asp-action="AlterarFuncionario"
+                                                  method="post">
 
-                                                    <input type="hidden" name="ticketId" value="@ticket.Id" />
-                                                    <input type="hidden" name="userId" value="@user.Id" />
+                                                <input type="hidden"
+                                                       name="ticketId"
+                                                       value="@ticket.Id" />
 
-                                                    <input type="submit"
-                                                           class="dropdown-item"
-                                                           value="@user.Name" />
-                                                </form>
-                                            }
+                                                <input type="hidden"
+                                                       name="userId"
+                                                       value="@user.Id" />
+
+                                                <button type="submit"
+                                                        class="dropdown-item">
+                                                    @user.Name
+                                                </button>
+
+                                            </form>
                                         }
+                                    }
+
                                 </div>
-                                </form>
+
                             </div>
                         </td>
                     </tr>

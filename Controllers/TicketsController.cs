@@ -62,5 +62,15 @@ namespace Gerenciador_de_chamados.Controllers
 
             return RedirectToAction("Index", new { id = ticketId });
         }
+
+        [HttpPost]
+        public IActionResult AlterarStatus(int ticketId,int status)
+        {
+            TicketModel ticket = _ticketRepositorio.FindById(ticketId);
+            ticket.Status = (Enums.TicketStatus)status; 
+            _ticketRepositorio.Atualizar(ticket);
+            return RedirectToAction("Index", new { id = ticketId });
+        }
+
     }
 }
