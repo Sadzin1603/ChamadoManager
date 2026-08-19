@@ -46,5 +46,21 @@ namespace Gerenciador_de_chamados.Controllers
             _ticketRepositorio.Atualizar(ticket);
             return RedirectToAction("Dashboard");
         }
+        [HttpPost]
+        public IActionResult AdicionarComentario(int ticketId, string content)
+        {
+            //obter o usuario logado
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            _ticketRepositorio.FindById(ticketId).Comment.Add(new CommentModel
+            {
+                UserId = userId,
+                Content = content,
+                CreatedAt = DateTime.Now
+            });
+            _ticketRepositorio.Atualizar(_ticketRepositorio.FindById(ticketId));
+
+            return RedirectToAction("Index", new { id = ticketId });
+        }
     }
 }

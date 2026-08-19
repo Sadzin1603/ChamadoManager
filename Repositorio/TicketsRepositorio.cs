@@ -42,8 +42,9 @@ namespace Gerenciador_de_chamados.Repositorio
         public TicketModel FindById(int id)
         {
             return _ticketsRepositorio.Tickets
+                .Include(t => t.Client)
                 .Include(t => t.Comment)
-                .Include(c => c.Client)
+                    .ThenInclude(c => c.User)
                 .FirstOrDefault(t => t.Id == id);
         }
     }

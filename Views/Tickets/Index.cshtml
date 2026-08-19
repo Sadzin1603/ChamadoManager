@@ -1,26 +1,139 @@
 ﻿@using System.Security.Claims
 @model TicketModel
+
 @{
-    ViewData["Title"] = "Criar Ticket";
+    ViewData["Title"] = "Chamado";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Ticket<span class="badge badge-primary">@Model.Title</span></h1>
-    <h2 class="display-6">@Model.Description</h2>
+<div class="container py-4">
 
-    <div class="conversa">
-        <div class="mensagem">
-            @foreach (var comment in Model.Comment)
+    <div class="card shadow-sm border-0">
+
+        @* Cabeçalho *@
+        <div class="card-header bg-white border-bottom p-4">
+            <div class="d-flex justify-content-between align-items-start">
+
+                <div>
+                    <small class="text-muted">Chamado #@Model.Id</small>
+                    <h3 class="mb-1 mt-1">@Model.Title</h3>
+                    <p class="text-muted mb-0">
+                        @Model.Description
+                    </p>
+                </div>
+
+                <span class="badge bg-primary">
+                    @Model.Status
+                </span>
+
+            </div>
+        </div>
+
+
+        @* Conversa *@
+        <div class="card-body bg-light p-4">
+
+            @if (Model.Comment.Count() > 0)
             {
-                <div class="mensagem">
-                    <p>@comment.Content</p>
-                    <span class="autor">@comment.User.Name</span>
+                @foreach (var comment in Model.Comment)
+                {
+                    if (comment.UserId == Model.ClientId)
+                    {
+                        @* Cliente *@
+                        <div class="d-flex justify-content-start mb-4">
+
+                            <div style="max-width: 70%;">
+
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <strong>@comment.User.Name</strong>
+                                    <small class="text-muted">Cliente</small>
+                                </div>
+
+                                <div class="bg-white border rounded-3 p-3 shadow-sm">
+                                    <p class="mb-0">
+                                        @comment.Content
+                                    </p>
+                                </div>
+
+                                <small class="text-muted">
+                                    @comment.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                                </small>
+
+                            </div>
+
+                        </div>
+                    }
+                    else
+                    {
+                        @* Funcionário *@
+                        <div class="d-flex justify-content-end mb-4">
+
+                            <div class="text-end" style="max-width: 70%;">
+
+                                <div class="mb-1">
+                                    <small class="text-muted">Atendente</small>
+                                    <strong class="ms-1">@comment.User.Name</strong>
+                                </div>
+
+                                <div class="bg-primary text-white rounded-3 p-3 shadow-sm text-start">
+                                    <p class="mb-0">
+                                        @comment.Content
+                                    </p>
+                                </div>
+
+                                <small class="text-muted">
+                                    @comment.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                                </small>
+
+                            </div>
+
+                        </div>
+                    }
+                }
+            }
+            else
+            {
+                <div class="text-center py-5 text-muted">
+                    <h5>Nenhuma mensagem ainda</h5>
+                    <p class="mb-0">
+                        Envie uma mensagem para iniciar a conversa.
+                    </p>
                 </div>
             }
-            
-        </div>
-    </div>
 
-    <input type="text" name="name" value="" />
+        </div>
+
+
+        @* Campo para nova mensagem *@
+        <div class="card-footer bg-white p-3">
+
+            <form asp-controller="Tickets"
+                  asp-action="AdicionarComentario"
+                  method="post">
+
+                <input type="hidden"
+                       name="TicketId"
+                       value="@Model.Id" />
+
+                <div class="input-group">
+
+                    <input type="text"
+                           class="form-control"
+                           name="Content"
+                           placeholder="Digite uma mensagem..."
+                           autocomplete="off"
+                           required />
+
+                    <button class="btn btn-primary px-4"
+                            type="submit">
+                        Enviar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
 
 </div>
