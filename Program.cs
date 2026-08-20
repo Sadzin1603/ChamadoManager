@@ -1,8 +1,10 @@
 using Gerenciador_de_chamados;
 using Gerenciador_de_chamados.Data;
+using Gerenciador_de_chamados.Models;
 using Gerenciador_de_chamados.Repositorio;
 using Gerenciador_de_chamados.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;

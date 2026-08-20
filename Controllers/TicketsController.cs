@@ -22,7 +22,7 @@ namespace Gerenciador_de_chamados.Controllers
             TicketModel ticket = _ticketRepositorio.FindById(id);
             return View(ticket);
         }
-        [Authorize]
+        [Authorize(Roles = "2")]
         public IActionResult Dashboard()
         {
             List<TicketModel> tickets = _ticketRepositorio.BuscarTodos();
